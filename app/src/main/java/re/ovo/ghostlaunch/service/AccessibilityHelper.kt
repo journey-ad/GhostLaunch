@@ -3,6 +3,7 @@ package re.ovo.ghostlaunch.service
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.provider.Settings
 import android.text.TextUtils
 
@@ -20,6 +21,14 @@ object AccessibilityHelper {
             if (splitter.next().equals(expected, true)) return true
         }
         return false
+    }
+
+    fun openAppDetails(context: Context) {
+        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+            data = Uri.fromParts("package", context.packageName, null)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        runCatching { context.startActivity(intent) }
     }
 
     fun openSettings(context: Context) {

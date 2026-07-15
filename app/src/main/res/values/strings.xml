@@ -59,7 +59,9 @@
 
     <!-- 引导卡片 -->
     <string name="guide_accessibility_title">辅助服务未开启</string>
-    <string name="guide_accessibility_desc">点击前往设置开启「隐藏启动辅助服务」\n开启后退出隐藏应用才会自动隐藏</string>
+    <string name="guide_accessibility_desc">点击前往设置开启「隐藏启动辅助服务」，开启后退出隐藏应用时才会自动隐藏</string>
+    <string name="guide_restricted_settings">允许受限设置</string>
+    <string name="guide_open_accessibility">辅助功能</string>
 
     <!-- App 选择器 -->
     <string name="picker_title">选择应用</string>

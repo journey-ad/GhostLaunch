@@ -151,7 +151,8 @@ fun ManagerScreen(
         if (!accessibilityEnabled) {
             AccessibilityGuideCard(
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                onClick = { AccessibilityHelper.openSettings(context) }
+                onRestrictedSettings = { AccessibilityHelper.openAppDetails(context) },
+                onOpenAccessibility = { AccessibilityHelper.openSettings(context) }
             )
             Spacer(Modifier.size(8.dp))
         }
@@ -283,25 +284,47 @@ fun ManagerScreen(
 }
 
 @Composable
-private fun AccessibilityGuideCard(modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun AccessibilityGuideCard(
+    modifier: Modifier = Modifier,
+    onRestrictedSettings: () -> Unit,
+    onOpenAccessibility: () -> Unit
+) {
     val title = stringResource(R.string.guide_accessibility_title)
     val desc = stringResource(R.string.guide_accessibility_desc)
-    Row(
+    val restrictedLabel = stringResource(R.string.guide_restricted_settings)
+    val accessibilityLabel = stringResource(R.string.guide_open_accessibility)
+    Column(
         modifier = modifier
             .fillMaxWidth()
             .background(Color(0xFFFFF8E1), RoundedCornerShape(8.dp))
             .border(1.dp, Color(0xFFE6C200), RoundedCornerShape(8.dp))
-            .clickable { onClick() }
-            .padding(12.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(12.dp)
     ) {
-        Icon(Icons.Outlined.Accessibility, contentDescription = null, tint = Color(0xFF8B6500))
-        Spacer(Modifier.size(8.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF8B6500))
-            Text(desc, fontSize = 12.sp, color = Color(0xFF555555))
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Icon(Icons.Outlined.Accessibility, contentDescription = null, tint = Color(0xFF8B6500))
+            Spacer(Modifier.size(8.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFF8B6500))
+                Text(desc, fontSize = 12.sp, color = Color(0xFF555555))
+            }
         }
-        Icon(Icons.Outlined.Settings, contentDescription = null, tint = Color(0xFF8B6500))
+        Spacer(Modifier.size(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            TextButton(
+                onClick = onRestrictedSettings,
+                modifier = Modifier
+                    .background(Color(0xFFFFF3CD), RoundedCornerShape(6.dp))
+            ) {
+                Text(restrictedLabel, fontSize = 13.sp, color = Color(0xFF8B6500))
+            }
+            TextButton(
+                onClick = onOpenAccessibility,
+                modifier = Modifier
+                    .background(Color(0xFFFFF3CD), RoundedCornerShape(6.dp))
+            ) {
+                Text(accessibilityLabel, fontSize = 13.sp, color = Color(0xFF8B6500))
+            }
+        }
     }
 }
 
