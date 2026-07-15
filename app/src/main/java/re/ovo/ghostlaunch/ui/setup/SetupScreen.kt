@@ -34,16 +34,13 @@ import re.ovo.ghostlaunch.R
 @Composable
 fun SetupScreen(onSetPassword: (String) -> Unit) {
     var pwd by remember { mutableStateOf("") }
-    var confirm by remember { mutableStateOf("") }
     var error by remember { mutableStateOf<String?>(null) }
     var pendingPassword by remember { mutableStateOf<String?>(null) }
 
     val title = stringResource(R.string.setup_title)
     val desc = stringResource(R.string.setup_desc)
     val pwdLabel = stringResource(R.string.setup_password_label)
-    val confirmLabel = stringResource(R.string.setup_confirm_label)
     val errorMinLength = stringResource(R.string.pwd_error_min_length)
-    val errorMismatch = stringResource(R.string.setup_error_mismatch)
     val ok = stringResource(R.string.ok)
     val hint = stringResource(R.string.setup_hint)
 
@@ -70,15 +67,6 @@ fun SetupScreen(onSetPassword: (String) -> Unit) {
         )
         Spacer(Modifier.height(4.dp))
         Text(hint, fontSize = 12.sp, color = Color(0xFF888888), modifier = Modifier.fillMaxWidth())
-        Spacer(Modifier.height(12.dp))
-        OutlinedTextField(
-            value = confirm,
-            onValueChange = { confirm = it.filter { c -> c.isDigit() } },
-            label = { Text(confirmLabel) },
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            modifier = Modifier.fillMaxWidth()
-        )
 
         error?.let {
             Spacer(Modifier.height(8.dp))
@@ -88,13 +76,11 @@ fun SetupScreen(onSetPassword: (String) -> Unit) {
         Spacer(Modifier.height(24.dp))
         Button(
             onClick = {
-                when {
-                    pwd.length < 4 -> error = errorMinLength
-                    pwd != confirm -> error = errorMismatch
-                    else -> {
-                        error = null
-                        pendingPassword = pwd
-                    }
+                if (pwd.length < 4) {
+                    error = errorMinLength
+                } else {
+                    error = null
+                    pendingPassword = pwd
                 }
             },
             modifier = Modifier.fillMaxWidth().height(48.dp),

@@ -49,6 +49,7 @@ class ManagerViewModel(
 
     init {
         refreshHidden()
+        syncDisabledPackages()
     }
 
     fun refreshHidden() {
@@ -58,10 +59,32 @@ class ManagerViewModel(
 
     fun refreshHideStatus() {
         Thread {
+            syncDisabledPackages()
             val disabled = ShizukuManager.listDisabledPackages()
             val status = _hiddenApps.value.associate { it.packageName to (it.packageName in disabled) }
             _hideStatus.value = status
         }.start()
+    }
+
+    private fun syncDisabledPackages() {
+        if (!ShizukuManager.isPermissionGranted()) return
+        val disabled = ShizukuManager.listDisabledPackages()
+        if (disabled.isEmpty()) return
+        val known = repository.listHiddenApps().map { it.packageName }.toSet()
+        val newPackages = disabled - known
+        if (newPackages.isEmpty()) return
+        val pm = context.packageManager
+        val own = context.packageName
+        newPackages.forEach { pkg ->
+            val label = runCatching {
+                val ai = pm.getApplicationInfo(pkg, 0)
+                pm.getApplicationLabel(ai).toString()
+            }.getOrDefault(pkg)
+            if (pkg != own) {
+                repository.addHiddenApp(HiddenApp(packageName = pkg, label = label, password = ""))
+            }
+        }
+        refreshHidden()
     }
 
     fun loadInstalledApps() {

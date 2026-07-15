@@ -41,6 +41,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -250,7 +251,7 @@ private fun AppRow(info: InstalledAppInfo, systemBadge: String, onClick: () -> U
 @Composable
 private fun AppIcon(packageName: String, sizeDp: Int) {
     val context = LocalContext.current
-    val density = context.resources.displayMetrics.density
+    val density = LocalDensity.current.density
     val sizePx = (sizeDp * density * 2).toInt()
     val icon = remember(packageName) {
         runCatching {

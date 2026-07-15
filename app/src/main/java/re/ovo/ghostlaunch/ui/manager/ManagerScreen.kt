@@ -26,6 +26,7 @@ import androidx.compose.material.icons.outlined.Accessibility
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.Delete
 import androidx.compose.material.icons.outlined.Edit
+import androidx.compose.material.icons.outlined.Security
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material.icons.outlined.VisibilityOff
 import androidx.compose.material3.Icon
@@ -43,7 +44,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -105,6 +106,7 @@ fun ManagerScreen(
     val pwdUnset = stringResource(R.string.mgr_password_unset)
     val hiddenBadge = stringResource(R.string.mgr_hidden_badge)
     val hideBtn = stringResource(R.string.mgr_hide)
+    val shizukuStartFirst = stringResource(R.string.shizuku_start_first)
     val editPwdBtn = stringResource(R.string.mgr_edit_pwd)
     val removeBtn = stringResource(R.string.mgr_remove)
     val pwdLabelTpl = stringResource(R.string.mgr_password_label)
@@ -161,7 +163,7 @@ fun ManagerScreen(
                     if (ShizukuManager.isRunning()) {
                         ShizukuManager.requestPermission()
                     } else {
-                        Toast.makeText(context, context.getString(R.string.shizuku_start_first), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, shizukuStartFirst, Toast.LENGTH_SHORT).show()
                     }
                 }
             )
@@ -317,7 +319,7 @@ private fun ShizukuGuideCard(modifier: Modifier = Modifier, onClick: () -> Unit)
             .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(Icons.Outlined.Settings, contentDescription = null, tint = Color(0xFFB71C1C))
+        Icon(Icons.Outlined.Security, contentDescription = null, tint = Color(0xFFB71C1C))
         Spacer(Modifier.size(8.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(title, fontSize = 14.sp, fontWeight = FontWeight.Bold, color = Color(0xFFB71C1C))

@@ -1,5 +1,7 @@
 package re.ovo.ghostlaunch.ui.settings
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +38,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import re.ovo.ghostlaunch.BuildConfig
 import re.ovo.ghostlaunch.R
 import re.ovo.ghostlaunch.ui.PasswordInputDialog
 import re.ovo.ghostlaunch.ui.PasswordReminderDialog
@@ -50,13 +53,6 @@ fun SettingsScreen(
     var editingPassword by remember { mutableStateOf(false) }
     var passwordReminder by remember { mutableStateOf<String?>(null) }
 
-    val versionName = remember {
-        runCatching {
-            @Suppress("DEPRECATION")
-            context.packageManager.getPackageInfo(context.packageName, 0).versionName
-        }.getOrDefault("1.0")
-    }
-
     val titleSettings = stringResource(R.string.settings)
     val titleAbout = stringResource(R.string.settings_about)
     val titleMgmt = stringResource(R.string.settings_management)
@@ -64,7 +60,9 @@ fun SettingsScreen(
     val appNameValue = stringResource(R.string.settings_app_name_value)
     val versionLabel = stringResource(R.string.settings_version_label)
     val pkgLabel = stringResource(R.string.settings_pkg_label)
+    val githubLabel = stringResource(R.string.settings_github_label)
     val changeAdminPwd = stringResource(R.string.settings_change_admin_pwd)
+    val githubUrl = BuildConfig.GITHUB_URL
 
     Column(
         modifier = Modifier
@@ -97,8 +95,16 @@ fun SettingsScreen(
         ) {
             item { SectionHeader(titleAbout) }
             item { InfoRow(appNameLabel, appNameValue) }
-            item { InfoRow(versionLabel, versionName ?: "1.0") }
-            item { InfoRow(pkgLabel, context.packageName) }
+            item { InfoRow(versionLabel, BuildConfig.VERSION_NAME) }
+            item {
+                InfoRow(
+                    label = githubLabel,
+                    value = githubUrl,
+                    onClick = {
+                        context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl)))
+                    }
+                )
+            }
 
             item { Spacer(Modifier.size(16.dp)) }
 
@@ -154,11 +160,12 @@ private fun SectionHeader(text: String) {
 }
 
 @Composable
-private fun InfoRow(label: String, value: String) {
+private fun InfoRow(label: String, value: String, onClick: (() -> Unit)? = null) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xFFF8F8F8), RoundedCornerShape(6.dp))
+            .then(onClick?.let { Modifier.clickable { it() } } ?: Modifier)
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

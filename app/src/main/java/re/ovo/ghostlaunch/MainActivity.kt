@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import android.os.Bundle
 import re.ovo.ghostlaunch.R
@@ -55,15 +56,17 @@ class MainActivity : ComponentActivity() {
                         val vm: CalculatorViewModel = viewModel(key = "calc") {
                             CalculatorViewModel(context.applicationContext)
                         }
+                        val shizukuRequestAuth = stringResource(R.string.shizuku_request_auth)
+                        val toastLaunchingFmt = stringResource(R.string.toast_launching)
                         CalculatorScreen(
                             viewModel = vm,
                             onOpenManager = { screen.value = Screen.MANAGER },
                             onRequestPermission = {
-                                Toast.makeText(context, context.getString(R.string.shizuku_request_auth), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, shizukuRequestAuth, Toast.LENGTH_SHORT).show()
                             },
                             onToast = { Toast.makeText(context, it, Toast.LENGTH_SHORT).show() },
                             onLaunched = { app ->
-                                Toast.makeText(context, context.getString(R.string.toast_launching, app.label), Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, toastLaunchingFmt.format(app.label), Toast.LENGTH_SHORT).show()
                             }
                         )
                     }

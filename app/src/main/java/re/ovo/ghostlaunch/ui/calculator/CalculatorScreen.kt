@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,7 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -195,7 +194,7 @@ private fun Keypad(
 }
 
 @Composable
-private fun RowScope.NumKey(text: String, modifier: Modifier, onClick: () -> Unit) {
+private fun NumKey(text: String, modifier: Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier
             .height(72.dp)
@@ -208,7 +207,7 @@ private fun RowScope.NumKey(text: String, modifier: Modifier, onClick: () -> Uni
 }
 
 @Composable
-private fun RowScope.OpKey(text: String, modifier: Modifier, onClick: () -> Unit) {
+private fun OpKey(text: String, modifier: Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier
             .height(72.dp)
@@ -221,7 +220,7 @@ private fun RowScope.OpKey(text: String, modifier: Modifier, onClick: () -> Unit
 }
 
 @Composable
-private fun RowScope.FuncKey(text: String, modifier: Modifier, onClick: () -> Unit) {
+private fun FuncKey(text: String, modifier: Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier
             .height(72.dp)
@@ -234,7 +233,7 @@ private fun RowScope.FuncKey(text: String, modifier: Modifier, onClick: () -> Un
 }
 
 @Composable
-private fun RowScope.EqualsKey(text: String, modifier: Modifier, onClick: () -> Unit) {
+private fun EqualsKey(text: String, modifier: Modifier, onClick: () -> Unit) {
     Box(
         modifier = modifier
             .height(72.dp)

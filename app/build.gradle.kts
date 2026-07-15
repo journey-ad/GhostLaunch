@@ -3,6 +3,24 @@ plugins {
     alias(libs.plugins.kotlin.compose)
 }
 
+fun getGitHash(): String = runCatching {
+    ProcessBuilder("git", "rev-parse", "--short=7", "HEAD")
+        .directory(rootProject.projectDir)
+        .redirectErrorStream(true)
+        .start()
+        .inputStream.bufferedReader().readText().trim()
+}.getOrDefault("unknown")
+
+fun getBaseVersion(): String = runCatching {
+    val p = ProcessBuilder("git", "describe", "--tags", "--abbrev=0")
+        .directory(rootProject.projectDir)
+        .redirectErrorStream(true)
+        .start()
+    val text = p.inputStream.bufferedReader().readText().trim()
+    if (p.waitFor() != 0) throw RuntimeException("no tags")
+    text.removePrefix("v")
+}.getOrDefault("unknown")
+
 android {
     namespace = "re.ovo.ghostlaunch"
     compileSdk {
@@ -16,14 +34,16 @@ android {
         minSdk = 24
         targetSdk = 36
         versionCode = 1
-        versionName = "1.0"
+        versionName = (project.findProperty("versionName") as? String ?: getBaseVersion())
+            .removePrefix("v") + (project.findProperty("versionSuffix") as? String ?: "") + " (${getGitHash()})"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "GITHUB_URL", "\"https://github.com/journey-ad/GhostLaunch\"")
     }
 
-    val keystoreFile = rootProject.file("calculator.keystore")
+    val keystoreFile = rootProject.file("ghostlaunch.keystore")
     val storePwd = System.getenv("KEYSTORE_PASSWORD") ?: providers.gradleProperty("KEYSTORE_PASSWORD").orNull
     val keyPwd = System.getenv("KEY_PASSWORD") ?: providers.gradleProperty("KEY_PASSWORD").orNull
-    val signingKeyAlias = System.getenv("KEY_ALIAS") ?: providers.gradleProperty("KEY_ALIAS").orNull ?: "calculator"
+    val signingKeyAlias = System.getenv("KEY_ALIAS") ?: providers.gradleProperty("KEY_ALIAS").orNull ?: "ghostlaunch"
 
     val hasSigningConfig = keystoreFile.exists() &&
         !storePwd.isNullOrEmpty() &&
@@ -41,6 +61,9 @@ android {
     }
 
     buildTypes {
+        debug {
+            applicationIdSuffix = ".debug"
+        }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
@@ -82,6 +105,7 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
