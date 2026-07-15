@@ -1,0 +1,114 @@
+<resources>
+    <string name="app_name">计算器</string>
+    <string name="accessibility_label">隐藏启动</string>
+    <string name="accessibility_desc">隐藏启动需要此服务监听应用退出并自动恢复隐藏状态。仅在隐藏应用退出时工作，不收集任何内容。</string>
+
+    <!-- 通用 -->
+    <string name="ok">确定</string>
+    <string name="cancel">取消</string>
+    <string name="back">返回</string>
+    <string name="settings">设置</string>
+    <string name="add">添加</string>
+    <string name="error">Error</string>
+
+    <!-- 计算器按键 -->
+    <string name="calc_clear">AC</string>
+    <string name="calc_backspace">⌫</string>
+    <string name="calc_divide">÷</string>
+    <string name="calc_multiply">×</string>
+    <string name="calc_subtract">−</string>
+    <string name="calc_add">+</string>
+    <string name="calc_equals">=</string>
+    <string name="calc_percent">%</string>
+    <string name="calc_dot">.</string>
+
+    <!-- Shizuku 状态 -->
+    <string name="shizuku_not_running">Shizuku 未运行</string>
+    <string name="shizuku_not_authorized">Shizuku 未授权</string>
+    <string name="shizuku_ready">就绪</string>
+    <string name="shizuku_request_auth">请在 Shizuku 中授权</string>
+    <string name="shizuku_start_first">请先启动 Shizuku</string>
+    <string name="shizuku_start_service">请先在 Shizuku 应用中启动服务</string>
+    <string name="shizuku_click_auth">点击授权 Shizuku 权限</string>
+
+    <!-- 密码输入弹窗 -->
+    <string name="pwd_label_optional">密码（纯数字，可留空）</string>
+    <string name="pwd_error_min_length">密码至少 4 位</string>
+
+    <!-- 初始化 -->
+    <string name="setup_title">初始化</string>
+    <string name="setup_desc">设置管理界面默认密码\n该密码用于从计算器进入隐藏列表</string>
+    <string name="setup_password_label">密码（纯数字，≥4位）</string>
+    <string name="setup_confirm_label">确认密码</string>
+    <string name="setup_error_mismatch">两次输入不一致</string>
+    <string name="setup_hint">在计算器界面输入此密码后按 = 号即可进入管理界面</string>
+
+    <!-- 密码提醒弹窗 -->
+    <string name="pwd_reminder_title">请牢记您的密码</string>
+    <string name="pwd_reminder_set_to">管理界面密码已设置为: </string>
+    <string name="pwd_reminder_warn">此密码用于从计算器界面进入隐藏应用管理。请务必牢记，无法找回。</string>
+    <string name="pwd_reminder_confirm">我知道了</string>
+
+    <!-- 管理界面 -->
+    <string name="mgr_title">隐藏应用管理</string>
+    <string name="mgr_hide_all">全部隐藏</string>
+    <string name="mgr_empty">暂无隐藏应用\n点击右上角添加</string>
+    <string name="mgr_password_label">密码: %1$s</string>
+    <string name="mgr_password_unset">未设置</string>
+    <string name="mgr_hidden_badge">已隐藏</string>
+    <string name="mgr_hide">隐藏</string>
+    <string name="mgr_edit_pwd">改密</string>
+    <string name="mgr_remove">移除</string>
+
+    <!-- 引导卡片 -->
+    <string name="guide_accessibility_title">辅助服务未开启</string>
+    <string name="guide_accessibility_desc">点击前往设置开启「计算器辅助服务」\n开启后退出隐藏应用才会自动隐藏</string>
+
+    <!-- App 选择器 -->
+    <string name="picker_title">选择应用</string>
+    <string name="picker_search">搜索应用名或包名</string>
+    <string name="picker_show_system">显示系统应用</string>
+    <string name="picker_system_badge">系统</string>
+    <string name="picker_section_added">已添加（%1$d）</string>
+    <string name="picker_section_not_added">未添加（%1$d）</string>
+    <string name="picker_loading">加载中...</string>
+    <string name="picker_no_match">无匹配应用</string>
+
+    <!-- App 启动密码弹窗 -->
+    <string name="app_pwd_title_set">设置启动密码</string>
+    <string name="app_pwd_title_edit">修改启动密码</string>
+    <string name="app_pwd_confirm_add">添加并隐藏</string>
+    <string name="app_pwd_header_app">应用: %1$s</string>
+    <string name="app_pwd_header_pkg">包名: %1$s</string>
+    <string name="app_pwd_hint">在计算器界面输入此密码后按 = 号即可启动该应用；留空则只能从管理界面启动</string>
+
+    <!-- 管理密码弹窗 -->
+    <string name="admin_pwd_title">修改管理密码</string>
+    <string name="admin_pwd_label">新管理密码（纯数字，≥4位）</string>
+    <string name="admin_pwd_hint">在计算器界面输入此密码后按 = 号即可进入管理界面</string>
+
+    <!-- 设置界面 -->
+    <string name="settings_about">关于</string>
+    <string name="settings_management">管理</string>
+    <string name="settings_app_name_label">应用名</string>
+    <string name="settings_app_name_value">计算器</string>
+    <string name="settings_version_label">版本</string>
+    <string name="settings_pkg_label">包名</string>
+    <string name="settings_change_admin_pwd">修改管理密码</string>
+
+    <!-- ViewModel toast 文案 -->
+    <string name="toast_launching">正在启动: %1$s</string>
+    <string name="toast_launch_failed">启动失败: %1$s</string>
+    <string name="toast_adding">添加中: %1$s</string>
+    <string name="toast_hidden">已隐藏: %1$s</string>
+    <string name="toast_hide_failed">隐藏失败: %1$s</string>
+    <string name="toast_restored">已恢复显示</string>
+    <string name="toast_restore_failed">恢复失败: %1$s</string>
+    <string name="toast_pwd_updated">密码已更新</string>
+    <string name="toast_admin_pwd_updated">默认密码已更新</string>
+    <string name="toast_list_empty">列表为空</string>
+    <string name="toast_hiding_n">正在隐藏 %1$d 个应用...</string>
+    <string name="toast_hide_all_result">已隐藏 %1$d/%2$d 个应用</string>
+    <string name="toast_shizuku_unauthorized">Shizuku 未授权</string>
+    <string name="toast_shizuku_unauthorized_hide">Shizuku 未授权，无法隐藏</string>
+</resources>
