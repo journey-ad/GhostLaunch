@@ -25,7 +25,6 @@
     <!-- Shizuku 状态 -->
     <string name="shizuku_not_running">Shizuku 未运行</string>
     <string name="shizuku_not_authorized">Shizuku 未授权</string>
-    <string name="shizuku_ready">就绪</string>
     <string name="shizuku_request_auth">请在 Shizuku 中授权</string>
     <string name="shizuku_start_first">请先启动 Shizuku</string>
     <string name="shizuku_start_service">请先在 Shizuku 应用中启动服务</string>

@@ -39,14 +39,8 @@ fun CalculatorScreen(
     onLaunched: (HiddenApp) -> Unit
 ) {
     val display by viewModel.display.collectAsState()
-    val shizukuRunning by viewModel.shizukuRunning.collectAsState()
-    val permissionGranted by viewModel.permissionGranted.collectAsState()
     val navEvent by viewModel.navEvent.collectAsState()
     val lifecycleOwner = LocalLifecycleOwner.current
-
-    val statusNotRunning = stringResource(R.string.shizuku_not_running)
-    val statusNotAuth = stringResource(R.string.shizuku_not_authorized)
-    val statusReady = stringResource(R.string.shizuku_ready)
 
     LaunchedEffect(lifecycleOwner) {
         val observer = LifecycleEventObserver { _, event ->
@@ -87,20 +81,6 @@ fun CalculatorScreen(
             .background(Color.White)
             .padding(12.dp)
     ) {
-        val statusText = when {
-            !shizukuRunning -> statusNotRunning
-            !permissionGranted -> statusNotAuth
-            else -> statusReady
-        }
-        val statusColor = if (shizukuRunning && permissionGranted) Color(0xFF1B5E20) else Color(0xFF8B0000)
-        Row(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(text = statusText, color = statusColor, fontSize = 12.sp)
-        }
-
         Display(
             text = display,
             modifier = Modifier.fillMaxWidth().weight(1f)
